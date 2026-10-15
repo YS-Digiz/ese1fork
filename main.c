@@ -1,0 +1,27 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+int main() {
+    pid_t pid = fork();
+
+    if (pid < 0) {
+        perror("Errore fork");
+        return 1;
+    } else if (pid == 0) {
+        for (int i = 1; i <= 5; i++) {
+            printf("%d\n", i);
+            fflush(stdout);
+            sleep(1);
+        }
+        exit(0);
+    } else {
+        wait(NULL);
+        for (int i = 6; i <= 10; i++) {
+            printf("%d\n", i);
+        }
+    }
+
+    return 0;
+}
